@@ -3,9 +3,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import reactViews from 'express-react-views';    
-import App from '../app/app';
-import { ssr } from './ssr';
 import dotenv from 'dotenv';
+import { HomeRouter } from './routes/home';
+import { ApiRouter } from './routes/api';
 
 dotenv.config({
     path: path.resolve(__dirname, '../../.env'),
@@ -51,18 +51,7 @@ if (process.env.NODE_ENV !== 'development') {
     );
 }
 
-app.get('/', (req, res) => {
-    const initialState = {
-        // ...
-    };
-
-    const markup = ssr(App, initialState);
-
-    res.render('home', {
-        markup,
-        initialState,
-        env: process.env.NODE_ENV,
-    });
-});
+app.use('/', HomeRouter);
+app.use('/api', ApiRouter);
 
 export default app;
