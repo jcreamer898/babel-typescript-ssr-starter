@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+const path = require('path');
+
+const http = require('http');
+const server = require('../dist/server').default;
+
+const port = process.env.PORT || 3000;
+const host = process.env.HOST || '0.0.0.0';
+
+http.createServer(server)
+    .listen(port, host, () => {
+        console.log('listening on %s', port);
+    });

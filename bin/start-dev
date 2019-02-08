@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+const path = require('path');
+
+require('@babel/register')({
+    babelrc: false,
+    extensions: ['.js', '.ts', '.jsx', '.tsx'],
+    configFile: path.join(process.cwd(), 'babel.config.node.js'),
+});
+
+const http = require('http');
+const server = require('../src/server').default;
+
+const port = process.env.PORT || 3000;
+const host = process.env.HOST || 'localhost';
+
+http.createServer(server)
+    .listen(port, host, () => {
+        console.log('listening on %s', port);
+    });
